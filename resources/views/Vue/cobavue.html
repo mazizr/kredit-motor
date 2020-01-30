@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Belajar Vue - DaengWeb</title>
+</head>
+<body>
+  <div id="VueID">
+	{{ pesan }}
+  </div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.js"></script>
+<script type="text/javascript">
+  var app = new Vue({
+  	el: '#VueID',
+  	data: {
+    	pesan: 'Saya sedang belajar vue!'
+  	}
+  })
+</script>
+</html>

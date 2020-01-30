@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Directive - Daengweb</title>
+</head>
+<body>
+    <div id="dw">
+        <ul class="list-group">
+            <li v-for="pap in paps">
+                Saya Belajar Bahasa pemrograman <b>"{{ pap.name }}"</b> dengan pengalaman <b>{{ pap.experience }}</b></b>
+            </li>
+        </ul>
+    </div>
+​
+    <script type="text/javascript" src="https://unpkg.com/vue@2.5.6/dist/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#dw',
+            data: {
+                paps: [
+                    {
+                        name: 'php',
+                        experience: '2 tahun'
+                    },
+                    {
+                        name: 'javascript',
+                        experience: '1 tahun'
+                    },
+                    {
+                        name: 'python',
+                        experience: '3 tahun'
+                    }
+                ]
+            }
+        }); 
+    </script>
+</body>
+</html>
