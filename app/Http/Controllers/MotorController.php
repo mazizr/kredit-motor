@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Motor;
-use App\WarnaMotor;
 use DataTables;
 use Auth;
 
@@ -30,8 +29,8 @@ class MotorController extends Controller
                     return number_format($data->motor_harga,0,'','.');
                 })
                 ->addColumn('action', function ($data) {
-                            $btn = ' <a href="/admin/kriditpaket/'.encrypt($data->id).'" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Kredit Paket" class="manage btn btn-default btn-sm manageData"><i class="glyphicon glyphicon-cog"></i></a>';
-                            $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editData"><i class="glyphicon glyphicon-pencil"></i></a>';
+                            $btn = ' <a href="/admin/kriditpaket/'.encrypt($data->id).'" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Kredit Paket" class="manage btn btn-default btn-sm manageData">Kredit</a>';
+                            $btn = $btn . ' | <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editData"><i class="glyphicon glyphicon-pencil"></i></a>';
                             $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData"><i class="glyphicon glyphicon-trash"></i></a>';     
                         return $btn;
                     
@@ -97,8 +96,8 @@ class MotorController extends Controller
             }
         }
 
-        $isi = array_keys($request->motor_warna_pilihan);
-        $ok = count($isi);
+        // $isi = array_keys($request->motor_warna_pilihan);
+        // $ok = count($isi);
         // dd($request->all());
         $image = $request->file('motor_gambar');
 
@@ -112,11 +111,11 @@ class MotorController extends Controller
         
         // $harga = implode('.', $request->motor_harga);
         // dd($request->motor_harga);
-        for ($i = 0; $i < $ok; $i++) {
-            $pilihan = $request->motor_warna_pilihan[$i];
-            $semua[] = $pilihan;
-        }
-        $warnanya = implode(',', $semua);
+        // for ($i = 0; $i < $ok; $i++) {
+        //     $pilihan = $request->motor_warna_pilihan[$i];
+        //     $semua[] = $pilihan;
+        // }
+        // $warnanya = implode(',', $semua);
         // dd($request->all());
         $satu = explode('.', $request->motor_harga);
         $harga = implode($satu);
@@ -125,7 +124,7 @@ class MotorController extends Controller
                  'motor_nama' => $request->motor_nama,
                  'motor_merk' => $request->motor_merk,
                  'motor_type' => $request->motor_type,
-                 'motor_warna_pilihan' => $warnanya, 
+                 'motor_warna_pilihan' => $request->motor_warna_pilihan, 
                  'motor_harga' => $harga,
                  'motor_gambar' => $new_name
                  ]);  

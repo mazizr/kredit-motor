@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\KriditPaket;
+use App\Motor;
 use DataTables;
 use Auth;
-use App\KriditPaket;
 
 class KriditPaketController extends Controller
 {

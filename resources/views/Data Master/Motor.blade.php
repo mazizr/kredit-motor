@@ -26,14 +26,14 @@
             <table class="table table-bordered data-table" width="100%">
                 <thead class="thead-dark kepala teks-putih">
                     <tr>
-                        <th>No</th>
-                        <th>Kode Motor</th>
-                        <th>Merk</th>
-                        <th>Tipe</th>
-                        <th>Warna</th>
-                        <th>Harga</th>
-                        <th>Gambar</th>
-                        <th>Opsi</th>
+                        <th width="5%">No</th>
+                        <th width="15%">Kode Motor</th>
+                        <th width="10%">Merk</th>
+                        <th width="10%">Tipe</th>
+                        <th width="10%">Warna</th>
+                        <th width="17%">Harga</th>
+                        <th width="12%">Gambar</th>
+                        <th width="25%">Opsi</th>
                     </tr>
                 </thead>  
                 <tbody>
@@ -71,32 +71,31 @@
                     <form id="dataForm" name="dataForm" enctype="multipart/form-data" class="form-horizontal">
                     <input type="hidden" name="motor_id" id="motor_id">
                             <div class="form-group">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label for="name" class="control-label">Kode Motor</label>
                                     <input type="text" class="form-control allownumericwithoutdecimal" id="motor_kode" name="motor_kode" placeholder="Masukkan Kode Motor" 
                                      maxlength="4" required="">
                                     <p style="color: red;" id="error_motor_kode"></p>
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Nama Motor</label>
+                                    <input type="text" class="form-control" id="motor_nama" name="motor_nama" placeholder="Masukkan Nama Motor" 
+                                    maxlength="50" required="">
+                                    <p style="color: red;" id="error_motor_nama"></p>
+                                </div>
+
+                                <div class="col-sm-4">
                                     <label for="name" class="control-label">Harga Motor</label>
                                     <input type="text" class="form-control number" id="motor_harga" name="motor_harga" placeholder="Masukkan Harga Motor" 
                                     maxlength="50" required="">
                                     <p style="color: red;" id="error_motor_harga"></p>
                                 </div>
+
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label" style="margin-left: 15px;">Nama Motor</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="motor_nama" name="motor_nama" placeholder="Masukkan Nama Motor" 
-                                    maxlength="50" required="">
-                                    <p style="color: red;" id="error_motor_nama"></p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label for="name" class="control-label">Brand Motor</label>
                                     <select type="text" class="form-control select2" id="motor_merk" style="width: 100%;" name="motor_merk" placeholder="" value="" maxlength="50" required="">
                                         <option value="Honda">
@@ -112,7 +111,7 @@
                                     <p style="color: red;" id="error_motor_merk"></p>
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <label for="name" class="control-label">Tipe Motor</label>
                                     <select type="text" class="form-control select2" id="motor_type" style="width: 100%;" name="motor_type" placeholder="" value="" maxlength="50" required="">
                                         <option value="Bebek">
@@ -127,12 +126,10 @@
                                     </select>
                                     <p style="color: red;" id="error_motor_type"></p>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="control-label" style="margin-left: 15px;">Warna Motor</label>
-                                <div class="col-sm-12">
-                                    <select type="text" class="form-control select2" id="motor_warna_pilihan" style="width: 100%;" name="motor_warna_pilihan[]" multiple placeholder="" value="" maxlength="50" required="">
+                                <div class="col-sm-4">
+                                    <label class="control-label">Warna Motor</label>
+                                    <select type="text" class="form-control select2" id="motor_warna_pilihan" style="width: 100%;" name="motor_warna_pilihan" placeholder="" value="" maxlength="50" required="">
                                         <option value="Merah">
                                             Merah
                                         </option>
@@ -292,6 +289,7 @@
                 $('#motor_warna_pilihan').trigger('change');
                 $('#motor_id').val(data.datamotor.id);                
                 $('#motor_kode').val(data.datamotor.motor_kode);
+                $('#motor_nama').val(data.datamotor.motor_nama);
                 $('#motor_harga').val(data.datamotor.motor_harga);
                 $('#motor_merk').val(data.datamotor.motor_merk);
                 $('#motor_merk').trigger('change');
