@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Motor;
 
 class FrontendController extends Controller
 {
@@ -13,12 +15,21 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        return view('FrontEnd.home');
+        $motor = Motor::all();
+        return view('FrontEnd.home', compact('motor'));
+    }
+
+    public function trending()
+    {
+        $data = \DB::select('SELECT * FROM motors');
+        // dd($data);
+        return response()->json($data); 
     }
 
     public function shop()
     {
-        return view('FrontEnd.shop');
+        $motor = Motor::all();
+        return view('FrontEnd.shop', compact('motor'));
     }
 
     public function about()

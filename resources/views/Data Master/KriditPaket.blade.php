@@ -28,7 +28,6 @@
                     <tr>
                         <th>No</th>
                         <th>Paket Kode</th>
-                        <th>Paket Harga Cash</th>
                         <th>Paket Uang Muka</th>
                         <th>Paket Jumlah Cicilan</th>
                         <th>Paket Bunga</th>
@@ -69,20 +68,21 @@
                     <!-- Akhir Alert validasi data-->
                     <!-- Form-->
                     <form id="dataForm" name="dataForm" enctype="multipart/form-data" class="form-horizontal">
-                    <input type="hidden" name="motor_id" id="motor_id">
+                        <input type="hidden" name="kreditpaket_id" id="kreditpaket_id" value="">
+                        <input type="hidden" name="id_motor" value="{{$id}}" id="id_motor">
                             <div class="form-group">
                                 <div class="col-sm-4">
-                                    <label for="name" class="control-label">Kode Motor</label>
-                                    <input type="text" class="form-control allownumericwithoutdecimal" id="motor_kode" name="motor_kode" placeholder="Masukkan Kode Motor" 
+                                    <label for="name" class="control-label">Kode Paket</label>
+                                    <input type="text" class="form-control allownumericwithoutdecimal" id="paket_kode" name="paket_kode" placeholder="Masukkan Kode Motor" 
                                      maxlength="4" required="">
-                                    <p style="color: red;" id="error_motor_kode"></p>
+                                    <p style="color: red;" id="error_paket_kode"></p>
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label class="control-label">Nama Motor</label>
-                                    <input type="text" class="form-control" id="motor_nama" name="motor_nama" placeholder="Masukkan Nama Motor" 
+                                    <label class="control-label">Paket Harga Cash</label>
+                                    <input type="text" class="form-control" id="paket_harga_cash" name="paket_harga_cash" placeholder="Masukkan Nama Motor" 
                                     maxlength="50" required="">
-                                    <p style="color: red;" id="error_motor_nama"></p>
+                                    <p style="color: red;" id="error_paket_harga_cash"></p>
                                 </div>
 
                                 <div class="col-sm-4">
@@ -186,7 +186,7 @@
     <script>
         $('[data-dismiss="modal"]').click(function(){
             //ERRORRRRRRRRR
-            $('#error_motor_kode').empty();
+            $('#error_paket_kode').empty();
             $('#error_motor_harga').empty();
             $('#error_motor_merk').empty();
             $('#error_motor_type').empty();
@@ -203,15 +203,17 @@
                 }
             });
     
+            var id = $('#id_motor').val();
             //INDEX TABEL
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ url('admin/table/kriditpaket') }}",
+                ajax: {
+                    url: "/admin/table/kriditpaket/"+id,
+                },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'paket_kode', name: 'paket_kode'},
-                    {data: 'paket_harga_cash', name: 'paket_harga_cash'},
                     {data: 'paket_uang_muka', name: 'paket_uang_muka'},
                     {data: 'paket_jumlah_cicilan', name: 'paket_jumlah_cicilan'},
                     {data: 'paket_bunga', name: 'paket_bunga'},
@@ -236,19 +238,19 @@
                 $('#motor_warna_pilihan').val('').trigger('change');
                 $('.gambar').html('');
                 //ERRORRRRRRRRR
-                $('#error_motor_kode').html();
-                $('#error_motor_nama').html();
+                $('#error_paket_kode').html();
+                $('#error_paket_harga_cash').html();
                 $('#error_motor_harga').html();
                 $('#error_motor_merk').html();
                 $('#error_motor_type').html();
                 $('#error_motor_warna_pilihan').html();
                 $('#error_motor_gambar').html();
 
-                $('#motor_kode').keypress(function(){
-                    $('#error_motor_kode').css('display','none');
+                $('#paket_kode').keypress(function(){
+                    $('#error_paket_kode').css('display','none');
                 });
-                $('#motor_nama').keypress(function(){
-                    $('#error_motor_nama').css('display','none');
+                $('#paket_harga_cash').keypress(function(){
+                    $('#error_paket_harga_cash').css('display','none');
                 });
                 $('#motor_type').change(function(){
                     $('#error_motor_type').css('display','none');
@@ -281,8 +283,8 @@
                 $('#motor_warna_pilihan').val(data.warna);
                 $('#motor_warna_pilihan').trigger('change');
                 $('#motor_id').val(data.datamotor.id);                
-                $('#motor_kode').val(data.datamotor.motor_kode);
-                $('#motor_nama').val(data.datamotor.motor_nama);
+                $('#paket_kode').val(data.datamotor.paket_kode);
+                $('#paket_harga_cash').val(data.datamotor.paket_harga_cash);
                 $('#motor_harga').val(data.datamotor.motor_harga);
                 $('#motor_merk').val(data.datamotor.motor_merk);
                 $('#motor_merk').trigger('change');
@@ -291,19 +293,19 @@
                 $('.gambar').html('');
                 $('.gambar').append("<input type='hidden' name='nama_gambar' id='nama_gambar' value='"+data.datamotor.motor_gambar+"' /><br><img src={{ URL::to('/') }}/images/" + data.datamotor.motor_gambar + " id='tampil_gambar' style='margin-top: -15px;' width='70' class='img-thumbnail' />");
                 //ERRORRRRRRRRR
-                $('#error_motor_kode').html();
-                $('#error_motor_nama').html();
+                $('#error_paket_kode').html();
+                $('#error_paket_harga_cash').html();
                 $('#error_motor_harga').html();
                 $('#error_motor_merk').html();
                 $('#error_motor_type').html();
                 $('#error_motor_warna_pilihan').html();
                 $('#error_motor_gambar').html();
 
-                $('#motor_kode').keypress(function(){
-                    $('#error_motor_kode').css('display','none');
+                $('#paket_kode').keypress(function(){
+                    $('#error_paket_kode').css('display','none');
                 });
-                $('#motor_nama').keypress(function(){
-                    $('#error_motor_nama').css('display','none');
+                $('#paket_harga_cash').keypress(function(){
+                    $('#error_paket_harga_cash').css('display','none');
                 });
                 $('#motor_type').change(function(){
                     $('#error_motor_type').css('display','none');
@@ -338,9 +340,9 @@
                 success: function (data) {
                     if (data[0] == 500) {
                         $('#saveBtn').show();
-                        $('#error_motor_kode').html('');
-                        $('#error_motor_kode').show();
-                        $('#error_motor_kode').append('<p>'+data.errors+'</p>');
+                        $('#error_paket_kode').html('');
+                        $('#error_paket_kode').show();
+                        $('#error_paket_kode').append('<p>'+data.errors+'</p>');
                     } else {
                     $('#dataForm').trigger("reset");
                     $('#ajaxModal').modal('hide');
@@ -361,8 +363,8 @@
 
                 error: function (request, status, error) {
                     $('#saveBtn').show();
-                    $('#error_motor_kode').empty().show();
-                    $('#error_motor_nama').empty().show();
+                    $('#error_paket_kode').empty().show();
+                    $('#error_paket_harga_cash').empty().show();
                     $('#error_motor_harga').empty().show();
                     $('#error_motor_merk').empty().show();
                     $('#error_motor_type').empty().show();
@@ -370,8 +372,8 @@
                     $('#error_motor_gambar').empty().show();
                     json = $.parseJSON(request.responseText);
                     console.log(json.errors);
-                    $('#error_motor_kode').html(json.errors.motor_kode);
-                    $('#error_motor_nama').html(json.errors.motor_nama);
+                    $('#error_paket_kode').html(json.errors.paket_kode);
+                    $('#error_paket_harga_cash').html(json.errors.paket_harga_cash);
                     $('#error_motor_harga').html(json.errors.motor_harga);
                     $('#error_motor_merk').html(json.errors.motor_merk);
                     $('#error_motor_type').html(json.errors.motor_type);

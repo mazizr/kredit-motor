@@ -34,7 +34,7 @@ Route::group(
         Route::delete('/pembeli-destroy/{id}', 'PembeliController@destroy'); 
 
         // Kridit Paket
-        Route::get('/table/kriditpaket', 'KriditPaketController@table');
+        Route::get('/table/kriditpaket/{id?}', 'KriditPaketController@table');
         Route::post('/kriditpaket-store', 'KriditPaketController@store');
         Route::get('/kriditpaket-isi/{id}', 'KriditPaketController@isi');
         Route::get('/kriditpaket/{id}/edit', 'KriditPaketController@edit');
@@ -71,6 +71,7 @@ Route::group(
     function () {
         Route::get('/', 'FrontendController@index');
         Route::get('/shop', 'FrontendController@shop');
+        Route::get('/trending', 'FrontendController@trending');
         Route::get('/about', 'FrontendController@about');
         Route::get('/blog', 'FrontendController@blog');
         Route::get('/contact', 'FrontendController@contact');
@@ -79,8 +80,7 @@ Route::group(
         });
 
         // Pembelian Single Produk
-        Route::get('/single', 'SingleController@index');
-        
+        Route::get('/single/{id?}', 'SingleController@index');
 });
 
 Auth::routes();

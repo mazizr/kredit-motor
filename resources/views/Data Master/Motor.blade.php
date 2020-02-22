@@ -29,9 +29,9 @@
                         <th width="5%">No</th>
                         <th width="15%">Kode Motor</th>
                         <th width="10%">Merk</th>
-                        <th width="10%">Tipe</th>
+                        <th width="22%">Tipe</th>
                         <th width="10%">Warna</th>
-                        <th width="17%">Harga</th>
+                        <th width="10%">Harga</th>
                         <th width="12%">Gambar</th>
                         <th width="25%">Opsi</th>
                     </tr>
@@ -79,10 +79,9 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label class="control-label">Nama Motor</label>
-                                    <input type="text" class="form-control" id="motor_nama" name="motor_nama" placeholder="Masukkan Nama Motor" 
-                                    maxlength="50" required="">
-                                    <p style="color: red;" id="error_motor_nama"></p>
+                                    <label for="name" class="control-label">Tipe Motor</label>
+                                    <input type="text" required class="form-control" name="motor_type" id="motor_type">
+                                    <p style="color: red;" id="error_motor_type"></p>
                                 </div>
 
                                 <div class="col-sm-4">
@@ -95,8 +94,8 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-sm-4">
-                                    <label for="name" class="control-label">Brand Motor</label>
+                                <div class="col-sm-6">
+                                    <label for="name" class="control-label" style="margin-top: 1px; margin-bottom: 11px;">Brand Motor</label>
                                     <select type="text" class="form-control select2" id="motor_merk" style="width: 100%;" name="motor_merk" placeholder="" value="" maxlength="50" required="">
                                         <option value="Honda">
                                             Honda
@@ -111,25 +110,29 @@
                                     <p style="color: red;" id="error_motor_merk"></p>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <label for="name" class="control-label">Tipe Motor</label>
-                                    <select type="text" class="form-control select2" id="motor_type" style="width: 100%;" name="motor_type" placeholder="" value="" maxlength="50" required="">
-                                        <option value="Bebek">
-                                            Bebek
-                                        </option>
-                                        <option value="Matic">
-                                            Matic
-                                        </option>
-                                        <option value="Sport">
-                                            Sport
-                                        </option>   
-                                    </select>
-                                    <p style="color: red;" id="error_motor_type"></p>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="control-label">Warna Motor</label>
-                                    <select type="text" class="form-control select2" id="motor_warna_pilihan" style="width: 100%;" name="motor_warna_pilihan" placeholder="" value="" maxlength="50" required="">
+                                <div class="col-sm-6">
+                                    <label for="name" class="control-label" style="margin-left: 10px;">Warna Motor</label>
+                                    <div class="input-group margin">
+                                        <div class="input-group-btn">
+                                            <button id="add-new-event" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                Warna 
+                                                <span class="fa fa-caret-down"></span>
+                                            </button>
+                                            <ul class="dropdown-menu col-md-12">
+                                                <li>
+                                                    <ul class="fc-color-picker" id="color-chooser">
+                                                        <li><a style="margin-left: 3px; color: blue;" href="#"><i class="fa fa-square"></i></a></li>
+                                                        <li><a style="color: red;" href="#"><i class="fa fa-square"></i></a></li>
+                                                        <li><a style="color: black;" href="#"><i class="fa fa-square"></i></a></li>
+                                                        <li><a style="color: yellow;" href="#"><i class="fa fa-square"></i></a></li>
+                                                        <li><a style="color: green;" href="#"><i class="fa fa-square"></i></a></li>
+                                                      </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <input type="text" value="" name="motor_warna_pilihan" id="motor_warna_pilihan" class="form-control">
+                                    </div>
+                                    {{-- <select type="text" class="form-control select2" id="motor_warna_pilihan" style="width: 100%;" name="motor_warna_pilihan" placeholder="" value="" maxlength="50" required="">
                                         <option value="Merah">
                                             Merah
                                         </option>
@@ -148,20 +151,27 @@
                                         <option value="Biru">
                                             Biru
                                         </option> 
-                                    </select>
+                                    </select> --}}
                                     <p style="color: red;" id="error_motor_warna_pilihan"></p>
                                 </div>
                             </div>
 
+                            
+
                             <div class="form-group">
-                                <label class="control-label" style="margin-left: 15px;">Gambar Motor</label>
-                                <div class="col-sm-12">
+                                <div class="col-sm-9">
+                                    <label for="name" class="control-label">Gambar Motor</label>
                                     <input type="file" class="form-control" name="motor_gambar" id="motor_gambar" />
                                     <div class="gambar">
                                     </div>
                                         <span id="store_image"></span>
                                         <p style="color: red;" id="error_motor_gambar"></p>
                                 </div>
+
+                                <div class="col-sm-3">
+                                    <img id="blah" style="width: 800px; height: 120px;" class="img-thumbnail" src="#" alt="your image" />
+                                </div>
+
                             </div>
                         
                     </form>
@@ -184,6 +194,64 @@
 
 @section('js')
     <script>
+        $('#motor_warna_pilihan').prop('disabled', true);
+        $('#blah').hide();
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                $('#blah').show();
+                var reader = new FileReader();
+        
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+        
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        $("#motor_gambar").change(function(){
+            readURL(this);
+        });
+    </script>
+    <script>
+        /* ADDING EVENTS */
+        var currColor = '#3c8dbc' //Red by default
+        //Color chooser button
+        var colorChooser = $('#color-chooser-btn')
+        $('#color-chooser > li > a').click(function (e) {
+        e.preventDefault()
+        $('#motor_warna_pilihan').prop('disabled', false);
+        //Save color
+        currColor = $(this).css('color')
+        //Add color effect to button
+        console.log(currColor);
+        $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor })
+        if (currColor == 'rgb(0, 0, 0)'){
+            var warna = 'Hitam';
+            console.log(warna);
+            $('#motor_warna_pilihan').val(warna);
+        } if (currColor == 'rgb(255, 0, 0)'){
+            var warna = 'Merah';
+            console.log(warna);
+            $('#motor_warna_pilihan').val(warna);
+        } if (currColor == 'rgb(0, 0, 255)'){
+            var warna = 'Biru';
+            console.log(warna);
+            $('#motor_warna_pilihan').val(warna);
+        } if (currColor == 'rgb(255, 255, 0)'){
+            var warna = 'Kuning';
+            console.log(warna);
+            $('#motor_warna_pilihan').val(warna);
+        } if (currColor == 'rgb(0, 128, 0)'){
+            var warna = 'Hijau';
+            console.log(warna);
+            $('#motor_warna_pilihan').val(warna);
+        } 
+        
+        })
+        
+    </script>
+    <script>
         $('[data-dismiss="modal"]').click(function(){
             //ERRORRRRRRRRR
             $('#error_motor_kode').empty();
@@ -193,6 +261,7 @@
             $('#error_motor_warna_pilihan').empty();
             $('#error_motor_gambar').empty();
             $('#dataForm').trigger("reset");
+            $('#blah').hide();
         });
     </script>
     <script type="text/javascript">
@@ -238,13 +307,18 @@
                 $('#modelHeading').html("Tambah Data");
                 $('#ajaxModal').modal({backdrop: 'static', keyboard: false});
                 $('#ajaxModal').modal('show');
+                $('#motor_kode').prop('disabled', true);
+                $('#motor_warna_pilihan').prop('disabled', true);
+                var currColor = '#3c8dbc' //Red by default
+                //Save color
+                currColor = $(this).css('color')
+                $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor });
+                $('#blah').attr('src', '#');
                 $('#motor_merk').val('').trigger('change');
-                $('#motor_type').val('').trigger('change');
                 $('#motor_warna_pilihan').val('').trigger('change');
                 $('.gambar').html('');
                 //ERRORRRRRRRRR
                 $('#error_motor_kode').html();
-                $('#error_motor_nama').html();
                 $('#error_motor_harga').html();
                 $('#error_motor_merk').html();
                 $('#error_motor_type').html();
@@ -253,9 +327,6 @@
 
                 $('#motor_kode').keypress(function(){
                     $('#error_motor_kode').css('display','none');
-                });
-                $('#motor_nama').keypress(function(){
-                    $('#error_motor_nama').css('display','none');
                 });
                 $('#motor_type').change(function(){
                     $('#error_motor_type').css('display','none');
@@ -272,7 +343,22 @@
                 $('#motor_gambar').change(function(){
                     $('#error_motor_gambar').css('display','none');
                 });
+
+                $('#motor_merk').on('change', function(){
+                    var motor_merk = $(this).val();
+                    $.ajax({
+                        url: "{{ url('/admin/motor-isi') }}"+'/'+motor_merk,
+                        method: "GET",
+                        dataType: "json",
+                        success: function (berhasil) {
+                            $('#motor_kode').prop('disabled', false);
+                            console.log(berhasil);
+                            $('#motor_kode').val(berhasil);
+                        }
+                    });
+                });
             });
+            
             
 
             //KETIKA BUTTON EDIT DI KLIK
@@ -284,22 +370,25 @@
                 $('#saveBtn').val("edit-user");
                 $('#saveBtn').html("Edit Data");
                 $('#ajaxModal').modal({backdrop: 'static', keyboard: false});
-                $('#ajaxModal').modal('show');     
-                $('#motor_warna_pilihan').val(data.warna);
-                $('#motor_warna_pilihan').trigger('change');
+                $('#ajaxModal').modal('show');   
+                $('#motor_kode').prop('disabled', false); 
+                $('#motor_warna_pilihan').prop('disabled', true); 
+                $('#backnya').css('background-color', data.datamotor.motor_warna_pilihan);
+                console.log(data.datamotor.motor_warna_pilihan);
+                $('#motor_warna_pilihan').val(data.datamotor.motor_warna_pilihan);
                 $('#motor_id').val(data.datamotor.id);                
                 $('#motor_kode').val(data.datamotor.motor_kode);
-                $('#motor_nama').val(data.datamotor.motor_nama);
                 $('#motor_harga').val(data.datamotor.motor_harga);
                 $('#motor_merk').val(data.datamotor.motor_merk);
                 $('#motor_merk').trigger('change');
                 $('#motor_type').val(data.datamotor.motor_type);
                 $('#motor_type').trigger('change');
+                $('#blah').show();
+                $('#blah').attr('src', '{{ URL::to("/") }}/images/' + data.datamotor.motor_gambar);
                 $('.gambar').html('');
-                $('.gambar').append("<input type='hidden' name='nama_gambar' id='nama_gambar' value='"+data.datamotor.motor_gambar+"' /><br><img src={{ URL::to('/') }}/images/" + data.datamotor.motor_gambar + " id='tampil_gambar' style='margin-top: -15px;' width='70' class='img-thumbnail' />");
+                $('.gambar').append("<input type='hidden' name='nama_gambar' id='nama_gambar' value='"+data.datamotor.motor_gambar+"' /><input type='hidden' name='warnanya' id='nama_warna' value='"+data.datamotor.motor_warna_pilihan+"' />");
                 //ERRORRRRRRRRR
                 $('#error_motor_kode').html();
-                $('#error_motor_nama').html();
                 $('#error_motor_harga').html();
                 $('#error_motor_merk').html();
                 $('#error_motor_type').html();
@@ -308,9 +397,6 @@
 
                 $('#motor_kode').keypress(function(){
                     $('#error_motor_kode').css('display','none');
-                });
-                $('#motor_nama').keypress(function(){
-                    $('#error_motor_nama').css('display','none');
                 });
                 $('#motor_type').change(function(){
                     $('#error_motor_type').css('display','none');
@@ -349,6 +435,7 @@
                         $('#error_motor_kode').show();
                         $('#error_motor_kode').append('<p>'+data.errors+'</p>');
                     } else {
+                        $('#blah').hide();
                     $('#dataForm').trigger("reset");
                     $('#ajaxModal').modal('hide');
                     table.draw();
@@ -369,7 +456,6 @@
                 error: function (request, status, error) {
                     $('#saveBtn').show();
                     $('#error_motor_kode').empty().show();
-                    $('#error_motor_nama').empty().show();
                     $('#error_motor_harga').empty().show();
                     $('#error_motor_merk').empty().show();
                     $('#error_motor_type').empty().show();
@@ -378,7 +464,6 @@
                     json = $.parseJSON(request.responseText);
                     console.log(json.errors);
                     $('#error_motor_kode').html(json.errors.motor_kode);
-                    $('#error_motor_nama').html(json.errors.motor_nama);
                     $('#error_motor_harga').html(json.errors.motor_harga);
                     $('#error_motor_merk').html(json.errors.motor_merk);
                     $('#error_motor_type').html(json.errors.motor_type);

@@ -18,27 +18,23 @@
       <section class="ftco-section bg-light">
       <div class="container-fluid">
           <div class="row">
+            @foreach ($motor as $item)
               <div class="col-sm col-md-6 col-lg-3 ftco-animate">
                     <div class="item">
-                            <div class="product">
-                                <a href="{{ url('/single') }}" class="img-prod"><img class="img-fluid" src="{{asset('assets/FrontEnd/images/trending/honda-gtr-150.jpg')}}" alt="Colorlib Template"></a>
-                                <div class="text pt-3 px-3">
-                                    <h3><a href="#">Honda GTR 150</a></h3>
-                                    <div class="d-flex">
-                                        <div class="pricing">
-                                            <p class="price"><span>Rp. 23.900.000,-</span></p>
-                                        </div>
-                                        <div class="rating">
-                                            <p class="text-right">
-                                                <span>DP: Rp. 900.000,-</span> <br>
-                                                <span>Rp. 1.100.000,-/bulan</span>
-                                            </p>
-                                        </div>
+                        <div class="product">
+                            <a href={{ URL::to('/') }}/single/{{ encrypt($item->id) }} class="img-prod"><img class="img-fluid" src={{ URL::to('/') }}/images/{{ $item->motor_gambar }} alt="Colorlib Template"></a>
+                            <div class="text pt-3 px-3">
+                                <h3><a href="#">{{ $item->motor_type }}</a></h3>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price"><span>Rp&nbsp;&nbsp;{{ number_format($item->motor_harga,0,'','.') }},00</span></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
               </div>
+            @endforeach
           </div>
       </div>
   </section>

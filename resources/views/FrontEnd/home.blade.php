@@ -69,25 +69,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="product-slider owl-carousel ftco-animate">
+                    @foreach ($motor as $item)
                     <div class="item">
                         <div class="product">
-                            <a href="{{ url('/single') }}" class="img-prod"><img class="img-fluid" src="{{asset('assets/FrontEnd/images/trending/honda-gtr-150.jpg')}}" alt="Colorlib Template"></a>
+                            <a href="#" class="img-prod"><img class="img-fluid" src={{ URL::to('/') }}/images/{{ $item->motor_gambar }} alt="Colorlib Template"></a>
                             <div class="text pt-3 px-3">
-                                <h3><a href="#">Honda GTR 150</a></h3>
+                                <h3><a href="#">{{ $item->motor_type }}</a></h3>
                                 <div class="d-flex">
                                     <div class="pricing">
-                                        <p class="price"><span>Rp. 23.900.000,-</span></p>
-                                    </div>
-                                    <div class="rating">
-                                        <p class="text-right">
-                                            <span>DP: Rp. 900.000,-</span> <br>
-                                            <span>Rp. 1.100.000,-/bulan</span>
-                                        </p>
+                                        <p class="price"><span>Rp&nbsp;&nbsp;{{ number_format($item->motor_harga,0,'','.') }},00</span></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -99,10 +95,10 @@
             <div class="row">
                 <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(assets/FrontEnd/images/trending/latarnya.jpg);">
                 </div>
-                <div class="col-md-7 py-5 wrap-about pb-md-5 ftco-animate">
+                <div class="col-md-6 py-4 wrap-about pb-md-4 ftco-animate">
                     <div class="heading-section-bold mb-5 mt-md-5">
-                        <div class="ml-md-0">
-                            <h2 class="mb-4">Kredit Motor <Modist br>Online <br> <span>Terbaik & Terpercaya</span></h2>
+                        <div class="ml-md-1">
+                            <h2 class="mb-2">Kredit Motor <Modist br>Online <br> <span>Terbaik & Terpercaya</span></h2>
                         </div>
                     </div>
                     <div class="pb-md-5">
@@ -113,3 +109,4 @@
         </div>
     </section>
 @endsection
+

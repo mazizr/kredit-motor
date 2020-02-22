@@ -11,8 +11,11 @@ class SingleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request,$id = null)
     {
+        $id = decrypt($id);
+        $data = \DB::select('SELECT * FROM motors WHERE id='.$id.'');
+        dd($data->motor_harga[0]);
         return view('FrontEnd.single');
     }
 

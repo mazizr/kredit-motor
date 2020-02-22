@@ -20,9 +20,7 @@ class MotorController extends Controller
         if ($request->ajax()) {
             $data = \DB::select('SELECT *
             FROM motors'); 
-            foreach ($data as $diti){
-                $pisah = explode(',', $diti->motor_warna_pilihan); // memisahkan ke dalam bentuk array
-            }
+            // dd($warna);
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('motor_harga', function($data) {
@@ -59,24 +57,43 @@ class MotorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'motor_kode' => 'required|min:4',
-            'motor_nama' => 'required',
-            'motor_merk' => 'required',
-            'motor_harga' => 'required',
-            'motor_type' => 'required',
-            'motor_warna_pilihan' => 'required'
-        ],
-        [
-            'motor_kode.required' => 'Kode Motor Harus Diisi',
-            'motor_nama.required' => 'Nama Motor Harus Diisi',
-            'motor_merk.required' => 'Brand Motor Harus Dipilih',
-            'motor_type.required' => 'Tipe Motor Harus Dipilih',
-            'motor_harga.required' => 'Harga Motor Harus Diisi',
-            'motor_kode.min' => 'Isikan minimal 4 nilai',
-            'motor_warna_pilihan.required' => 'Warna Motor Harus Dipilih',
-        ]
-        );
+        // dd($request->all());
+        if (!isset($request->motor_id)) {
+            $request->validate([
+                'motor_kode' => 'required|min:4',
+                'motor_merk' => 'required',
+                'motor_harga' => 'required',
+                'motor_type' => 'required',
+                'motor_warna_pilihan' => 'required'
+            ],
+            [
+                'motor_kode.required' => 'Kode Motor Harus Diisi',
+                'motor_merk.required' => 'Brand Motor Harus Dipilih',
+                'motor_type.required' => 'Tipe Motor Harus Diisi',
+                'motor_harga.required' => 'Harga Motor Harus Diisi',
+                'motor_kode.min' => 'Isikan minimal 4 nilai',
+                'motor_warna_pilihan.required' => 'Warna Motor Harus Dipilih',
+            ]
+            );
+        } else {
+            $request->validate([
+                'motor_kode' => 'required|min:4',
+                'motor_merk' => 'required',
+                'motor_harga' => 'required',
+                'motor_type' => 'required'
+            ],
+            [
+                'motor_kode.required' => 'Kode Motor Harus Diisi',
+                'motor_merk.required' => 'Brand Motor Harus Dipilih',
+                'motor_type.required' => 'Tipe Motor Harus Diisi',
+                'motor_harga.required' => 'Harga Motor Harus Diisi',
+                'motor_kode.min' => 'Isikan minimal 4 nilai'
+            ]
+            );
+        }
+        
+
+        
 
         if(!isset($request->motor_id)){ 
             $request->validate(['motor_gambar' => 'required'],['motor_gambar.required' => 'Gambar Motor Harus Dipilih']);
@@ -85,6 +102,7 @@ class MotorController extends Controller
             if ($cek) {
                 return response()->json(['errors'=>'Telah Ada Data Yang Sama', 500]);
             }
+            $warna = $request->motor_warna_pilihan;
         }
 
         if(isset($request->motor_id)){ 
@@ -94,6 +112,7 @@ class MotorController extends Controller
             if (!$cek && $cek2) {
                 return response()->json(['errors'=>'Telah Ada Data Yang Sama', 500]);
             }
+            $warna = $request->warnanya;
         }
 
         // $isi = array_keys($request->motor_warna_pilihan);
@@ -121,7 +140,6 @@ class MotorController extends Controller
         $harga = implode($satu);
         Motor::updateOrCreate(['id' => $request->motor_id],
                 ['motor_kode' => $request->motor_kode,
-                 'motor_nama' => $request->motor_nama,
                  'motor_merk' => $request->motor_merk,
                  'motor_type' => $request->motor_type,
                  'motor_warna_pilihan' => $request->motor_warna_pilihan, 
@@ -133,16 +151,44 @@ class MotorController extends Controller
         return response()->json(['success'=>'Motor saved successfully.']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function warna(Request $request)
+    public function isi($id)
     {
-        $warna = WarnaMotor::all();
-        return response()->json($warna);
+        $cek = \DB::select('SELECT motor_kode FROM motors WHERE motor_merk = "'.$id.'" ORDER BY motor_kode DESC LIMIT 1');
+        
+        if($cek==[]){
+            $angka = 0001;
+            if($id == 'Honda'){
+                $kode = 'HND-'.$angka;
+            }
+            if($id == 'Yamaha'){
+                $kode = 'YMH-'.$angka;
+            } elseif ($id == 'Suzuki') {
+                $kode= 'SZK-'.$angka;
+            }
+        } else {
+            // dd($cek);
+            foreach($cek as $data){ 
+                // dd($data->motor_kode); 
+                $isi = $data->motor_kode; 
+            }
+            // dd($isi->motor_kode);
+            $pisah = explode('-', $isi);
+            // dd($pisah);
+            $pilih_angka = intval($pisah[1]);
+            // dd($pilih_angka+1);
+            $hasil = $pilih_angka+1;
+            // dd($hasil);
+            if($id == 'Honda'){
+                $kode = 'HND-'.$hasil;
+            }
+            if($id == 'Yamaha'){
+                $kode = 'YMH-'.$hasil;
+            } elseif ($id == 'Suzuki') {
+                $kode= 'SZK-'.$hasil;
+            }
+        }
+        // dd($kode);
+        return response()->json($kode);
     }
 
     /**

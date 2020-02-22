@@ -19,10 +19,10 @@ class KriditPaketController extends Controller
     public function table(Request $request,$id = null)
     {
         $id = decrypt($id);
+        // dd($id);
         if ($request->ajax()) {
             $data = \DB::select('SELECT *
             FROM kridit_pakets WHERE id_motor = '.$id.'');
-
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($data) {

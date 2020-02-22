@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{ asset('assets/backendnya/plugins/iCheck/square/blue.css') }}">
   <style>
       #backnya{
-          background-image: url("{{ asset('image/back-purple.jpg') }}");
+          background-image: url("{{ asset('image/kedua.jpg') }}");
           background-size: 100%;
       }
 

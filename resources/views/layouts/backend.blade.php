@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Kremo | @stack('title')</title>
-  <link rel="icon" href="{{ asset('image/s.ico') }}">
+  <link rel="icon" href="{{ asset('image/icon.ico') }}">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="http://apro-admin-templates.websitedesignmarketingagency.com/aproadmin/assets/vendor_plugins/iCheck/all.css">
   <!-- Morris chart -->
   <link rel="stylesheet" href="{{ asset('assets/backendnya/bower_components/morris.js/morris.css') }}">
+  <!-- Color Picker -->
+  <link rel="stylesheet" href="{{ asset('assets/backendnya/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
   <!-- Date Picker -->
   <link rel="stylesheet" href="{{ asset('assets/backendnya/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
   <!-- Daterange picker -->
@@ -31,7 +33,7 @@
   <link rel="stylesheet" href="{{ asset('assets/backendnya/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
   <style>
       .kepala{
-          background-image: url("{{ asset('image/back-purple.jpg') }}");
+          background-image: url("{{ asset('image/kedua.jpg') }}");
           background-size: 100%;
       }
 
@@ -129,6 +131,8 @@
 <script src="{{ asset('assets/backendnya/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ asset('js/repeater.js') }}"></script>
+<!-- Color Picker -->
+<script src="{{ asset('assets/backendnya/bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
 <script>
     $('.datepicker').datepicker({
         autoclose: true,
@@ -163,6 +167,17 @@
     });
 
 </script>
+<!-- Page script -->
+  <script>
+    $(function () {
+
+      //Colorpicker
+      $('.my-colorpicker1').colorpicker()
+      //color picker with addon
+      $('.my-colorpicker2').colorpicker()
+
+    })
+  </script>
 @yield('js')
 </body>
 </html>
