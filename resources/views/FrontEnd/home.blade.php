@@ -24,38 +24,29 @@
 
 <div class="goto-here"></div>
 
-<section class="ftco-section ftco-product">
-        <div class="container">
-            <div class="row justify-content-center mb-3 pb-3">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <h1 class="big">Brand</h1>
-                    <h2 class="mb-4">Brand</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row justify-content-center mb-3 pb-3">
-                            <div class="item" style="margin-right: 60px;">
-                                <div>
-                                    <a href="#" class="img-prod"><img class="img-fluid" style="width: 100px; height: 100px;" src="{{ asset('assets/FrontEnd/images/Brand/yamaha.jpg') }}" alt="Colorlib Template">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item" style="margin-right: 60px;">
-                                <div>
-                                    <a href="#" class="img-prod"><img class="img-fluid" style="width: 100px; height: 100px;" src="{{ asset('assets/FrontEnd/images/Brand/honda.png') }}" alt="Colorlib Template"></a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div>
-                                    <a href="#" class="img-prod"><img class="img-fluid" style="width: 100px; height: 100px;" src="{{ asset('assets/FrontEnd/images/Brand/suzuki.png') }}" alt="Colorlib Template"></a>
-                                </div>
-                            </div>
+<section style="margin-top: -80px;" class="ftco-section ftco-product">
+    <div class="container">
+        <div class="row justify-content-center mb-3 pb-3">
+        <div class="col-md-12 heading-section text-center ftco-animate">
+        <h1 class="big">Brand</h1>
+        <h2 class="mb-4">Brand</h2>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-slider owl-carousel ftco-animate">
+                    @foreach ($merk as $item)
+                    <div class="item" style="margin-left: -80px;">
+                        <div class="product">
+                            <a href={{ URL::to('/') }}/shop/{{$item->slug }} class="img-prod"><img class="img-fluid" style="width: 200px;" 
+                                src={{ URL::to('/') }}/images/{{ $item->gambar_merk }} alt="Colorlib Template"></a>
                         </div>
-                    </div>  
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
+    </div>
 </section>
 
 <section style="margin-top: -80px;" class="ftco-section ftco-product">
@@ -72,9 +63,9 @@
                     @foreach ($motor as $item)
                     <div class="item">
                         <div class="product">
-                            <a href="#" class="img-prod"><img class="img-fluid" src={{ URL::to('/') }}/images/{{ $item->motor_gambar }} alt="Colorlib Template"></a>
+                            <a href="{{ URL::to('/') }}/single/{{ $item->slug }}" class="img-prod"><img class="img-fluid" src={{ URL::to('/') }}/images/{{ $item->motor_gambar }} alt="Colorlib Template"></a>
                             <div class="text pt-3 px-3">
-                                <h3><a href="#">{{ $item->motor_type }}</a></h3>
+                                <h3><a href="{{ URL::to('/') }}/single/{{ $item->slug }}">{{ $item->motor_type }}</a></h3>
                                 <div class="d-flex">
                                     <div class="pricing">
                                         <p class="price"><span>Rp&nbsp;&nbsp;{{ number_format($item->motor_harga,0,'','.') }},00</span></p>

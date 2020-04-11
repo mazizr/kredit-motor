@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Motor;
+use App\Merk;
 
 class FrontendController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        $motor = Motor::all();
-        return view('FrontEnd.home', compact('motor'));
+        $motor = \DB::select('SELECT DISTINCT(m.id), m.motor_kode , m.motor_merk, m.motor_type, m.motor_warna_pilihan, m.motor_harga, m.motor_gambar, m.id_merk, m.slug
+        FROM kridit_pakets AS kp 
+        LEFT JOIN motors AS m ON m.id = kp.id_motor');
+        $merk = Merk::all();
+        return view('FrontEnd.home', compact('motor','merk'));
     }
 
     public function trending()
@@ -47,69 +47,42 @@ class FrontendController extends Controller
         return view('FrontEnd.contact');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function brand($motor = null)
     {
-        //
+        // dd($motor);
+        $motor = \DB::select('SELECT m.id, m.motor_kode, m.motor_merk, m.motor_type, m.motor_warna_pilihan, m.motor_harga, m.motor_gambar
+        FROM motors AS m 
+        LEFT JOIN merks AS mk ON mk.id = m.motor_merk 
+        WHERE mk.slug = "'.$motor.'"');
+
+    return view('FrontEnd.shop', compact('motor'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function belicash($motor = null)
     {
-        //
+        
+        $motor = \DB::select('SELECT * FROM motors
+        WHERE slug = "'.$motor.'"');
+        foreach($motor as $diti){
+            $semua = $diti;
+         }
+        return view('FrontEnd.belicash', compact('semua'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function belicicilan($motor = null)
     {
-        //
+        
+        $motor = \DB::select('SELECT * FROM motors
+        WHERE slug = "'.$motor.'"');
+        foreach($motor as $diti){
+            $semua = $diti;
+         }
+        return view('FrontEnd.belicicilan', compact('semua'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function simpancash(Request $request)
     {
-        //
+        dd($request->all());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

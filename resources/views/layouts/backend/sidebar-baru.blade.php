@@ -4,13 +4,18 @@
         <ul class="metismenu">
             <li class="nav-label">Data Master</li>
             <li>
-                <a href="{{ url('admin/pembeli')}}" aria-expanded="false">
-                    <i class="icon-user menu-icon"></i><span class="nav-text">Pembeli</span>
+                <a href="{{ url('admin/merk')}}" aria-expanded="false">
+                    <i class="icon-badge menu-icon"></i><span class="nav-text">Brand</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url('admin/motor')}}" aria-expanded="false">
                     <i class="icon-badge menu-icon"></i><span class="nav-text">Motor</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('admin/pembeli')}}" aria-expanded="false">
+                    <i class="icon-user menu-icon"></i><span class="nav-text">Pembeli</span>
                 </a>
             </li>
             <li>

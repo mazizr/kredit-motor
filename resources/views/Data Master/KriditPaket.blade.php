@@ -27,7 +27,7 @@
                 <thead class="thead-dark kepala teks-putih">
                     <tr>
                         <th>No</th>
-                        <th>Paket Kode</th>
+                        <th width="15%">Tenor</th>
                         <th>Paket Uang Muka</th>
                         <th>Paket Jumlah Cicilan</th>
                         <th>Paket Bunga</th>
@@ -43,7 +43,7 @@
     </div>
     
     <!-- bagian modal-->
-    <div class="modal fade" id="ajaxModal" aria-hidden="true">
+    <div class="modal" id="ajaxModal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <!-- Bagian header modal-->
@@ -70,99 +70,67 @@
                     <form id="dataForm" name="dataForm" enctype="multipart/form-data" class="form-horizontal">
                         <input type="hidden" name="kreditpaket_id" id="kreditpaket_id" value="">
                         <input type="hidden" name="id_motor" value="{{$id}}" id="id_motor">
+                        <div>
+                            <div class="form-group">
+
+                                <div class="col-sm-6">
+                                    <label class="control-label">Tenor</label>
+                                    <select class="form-control" name="tenor[]" id="tenor">
+                                        <option disabled selected>--Pilih Tenor--</option>
+                                        <option value="12">12</option>
+                                        <option value="24">24</option>
+                                        <option value="36">36</option>
+                                    </select>
+                                    <p style="color: red;" id="error_tenor"></p>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="control-label">Paket Uang Muka</label>
+                                    <input type="text" disabled class="form-control number" id="paket_uang_muka_isi" name="paket_uang_muka_isi" placeholder="Masukkan Nama Motor" 
+                                    maxlength="50" required="">
+                                    <input type="hidden" name="paket_uang_muka[]" id="paket_uang_muka">
+                                    <p style="color: red;" id="error_paket_uang_muka"></p>
+                                </div>
+
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-sm-4">
-                                    <label for="name" class="control-label">Kode Paket</label>
-                                    <input type="text" class="form-control allownumericwithoutdecimal" id="paket_kode" name="paket_kode" placeholder="Masukkan Kode Motor" 
+                                    <label for="name" class="control-label">Paket Bunga</label>
+                                    <input type="text" disabled class="form-control number" 
+                                    id="paket_bunga_isi" name="paket_bunga_isi" placeholder="Masukkan Kode Motor" 
                                      maxlength="4" required="">
-                                    <p style="color: red;" id="error_paket_kode"></p>
+                                     <input type="hidden" name="paket_bunga[]" id="paket_bunga">
+                                    <p style="color: red;" id="error_paket_bunga"></p>
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <label class="control-label">Paket Harga Cash</label>
-                                    <input type="text" class="form-control" id="paket_harga_cash" name="paket_harga_cash" placeholder="Masukkan Nama Motor" 
+                                    <label class="control-label">Paket Nilai Cicilan</label>
+                                    <input type="text" disabled class="form-control number" 
+                                    id="paket_nilai_cicilan_isi" name="paket_nilai_cicilan_isi" placeholder="Masukkan Kode Motor" 
+                                     maxlength="4" required="">
+                                     <input type="hidden" name="paket_nilai_cicilan[]" id="paket_nilai_cicilan">
+                                    <p style="color: red;" id="error_paket_nilai_cicilan"></p>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <label for="name" class="control-label">Paket Jumlah Cicilan</label>
+                                    <input type="text" disabled class="form-control number" id="paket_jumlah_cicilan_isi" name="paket_jumlah_cicilan_isi" placeholder="Masukkan Harga Motor" 
                                     maxlength="50" required="">
-                                    <p style="color: red;" id="error_paket_harga_cash"></p>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label for="name" class="control-label">Harga Motor</label>
-                                    <input type="text" class="form-control number" id="motor_harga" name="motor_harga" placeholder="Masukkan Harga Motor" 
-                                    maxlength="50" required="">
-                                    <p style="color: red;" id="error_motor_harga"></p>
+                                    <input type="hidden" name="paket_jumlah_cicilan[]" id="paket_jumlah_cicilan">
+                                    <p style="color: red;" id="error_paket_jumlah_cicilan"></p>
                                 </div>
 
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-sm-4">
-                                    <label for="name" class="control-label">Brand Motor</label>
-                                    <select type="text" class="form-control select2" id="motor_merk" style="width: 100%;" name="motor_merk" placeholder="" value="" maxlength="50" required="">
-                                        <option value="Honda">
-                                            Honda
-                                        </option>
-                                        <option value="Yamaha">
-                                            Yamaha
-                                        </option>
-                                        <option value="Suzuki">
-                                            Suzuki
-                                        </option>   
-                                    </select>
-                                    <p style="color: red;" id="error_motor_merk"></p>
-                                </div>
+                            <div id="tambah">
 
-                                <div class="col-sm-4">
-                                    <label for="name" class="control-label">Tipe Motor</label>
-                                    <select type="text" class="form-control select2" id="motor_type" style="width: 100%;" name="motor_type" placeholder="" value="" maxlength="50" required="">
-                                        <option value="Bebek">
-                                            Bebek
-                                        </option>
-                                        <option value="Matic">
-                                            Matic
-                                        </option>
-                                        <option value="Sport">
-                                            Sport
-                                        </option>   
-                                    </select>
-                                    <p style="color: red;" id="error_motor_type"></p>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="control-label">Warna Motor</label>
-                                    <select type="text" class="form-control select2" id="motor_warna_pilihan" style="width: 100%;" name="motor_warna_pilihan" placeholder="" value="" maxlength="50" required="">
-                                        <option value="Merah">
-                                            Merah
-                                        </option>
-                                        <option value="Hitam">
-                                            Hitam
-                                        </option>
-                                        <option value="Putih">
-                                            Putih
-                                        </option> 
-                                        <option value="Silver">
-                                            Silver
-                                        </option>   
-                                        <option value="Gold">
-                                            Gold
-                                        </option> 
-                                        <option value="Biru">
-                                            Biru
-                                        </option> 
-                                    </select>
-                                    <p style="color: red;" id="error_motor_warna_pilihan"></p>
-                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="control-label" style="margin-left: 15px;">Gambar Motor</label>
-                                <div class="col-sm-12">
-                                    <input type="file" class="form-control" name="motor_gambar" id="motor_gambar" />
-                                    <div class="gambar">
-                                    </div>
-                                        <span id="store_image"></span>
-                                        <p style="color: red;" id="error_motor_gambar"></p>
-                                </div>
+                            <div align="right">
+                                <button type="button" class="btn btn-primary" id="add">Tambah Kredit Paket</button>
+                                {{--  <p style="color: red;" id="error_tambah"></p>  --}}
                             </div>
+                        </div>
                         
                     </form>
                     <!-- Akhir Form-->
@@ -183,18 +151,6 @@
 @endsection
 
 @section('js')
-    <script>
-        $('[data-dismiss="modal"]').click(function(){
-            //ERRORRRRRRRRR
-            $('#error_paket_kode').empty();
-            $('#error_motor_harga').empty();
-            $('#error_motor_merk').empty();
-            $('#error_motor_type').empty();
-            $('#error_motor_warna_pilihan').empty();
-            $('#error_motor_gambar').empty();
-            $('#dataForm').trigger("reset");
-        });
-    </script>
     <script type="text/javascript">
         $(function () {
             $.ajaxSetup({
@@ -213,7 +169,7 @@
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                    {data: 'paket_kode', name: 'paket_kode'},
+                    {data: 'tenor', name: 'tenor'},
                     {data: 'paket_uang_muka', name: 'paket_uang_muka'},
                     {data: 'paket_jumlah_cicilan', name: 'paket_jumlah_cicilan'},
                     {data: 'paket_bunga', name: 'paket_bunga'},
@@ -233,14 +189,35 @@
                 $('#modelHeading').html("Tambah Data");
                 $('#ajaxModal').modal({backdrop: 'static', keyboard: false});
                 $('#ajaxModal').modal('show');
-                $('#motor_merk').val('').trigger('change');
-                $('#motor_type').val('').trigger('change');
-                $('#motor_warna_pilihan').val('').trigger('change');
-                $('.gambar').html('');
+                $('#add').show();
+
+                $('#tenor').on('change', function(){
+                    var tenor = $(this).val();
+                    var id = $('#id_motor').val(); 
+                    var nyatu = id+'|'+tenor;
+                    $.ajax({
+                        url: "{{ url('/admin/kriditpaket-isi') }}"+'/'+nyatu,
+                        method: "GET",
+                        dataType: "json",
+                        success: function (berhasil) {
+                            console.log(berhasil); 
+                            $('#paket_bunga').val(berhasil.paket_bunga);
+                            $('#paket_jumlah_cicilan').val(berhasil.paket_jumlah_cicilan);
+                            $('#paket_nilai_cicilan').val(berhasil.paket_nilai_cicilan);
+                            $('#paket_uang_muka').val(berhasil.paket_uang_muka);
+
+                            $('#paket_bunga_isi').val(berhasil.paket_bunga);
+                            $('#paket_jumlah_cicilan_isi').val(berhasil.paket_jumlah_cicilan);
+                            $('#paket_nilai_cicilan_isi').val(berhasil.paket_nilai_cicilan);
+                            $('#paket_uang_muka_isi').val(berhasil.paket_uang_muka);
+                        }
+                    });
+                });
+
                 //ERRORRRRRRRRR
                 $('#error_paket_kode').html();
-                $('#error_paket_harga_cash').html();
-                $('#error_motor_harga').html();
+                $('#error_paket_uang_muka').html();
+                $('#error_paket_jumlah_cicilan').html();
                 $('#error_motor_merk').html();
                 $('#error_motor_type').html();
                 $('#error_motor_warna_pilihan').html();
@@ -249,8 +226,8 @@
                 $('#paket_kode').keypress(function(){
                     $('#error_paket_kode').css('display','none');
                 });
-                $('#paket_harga_cash').keypress(function(){
-                    $('#error_paket_harga_cash').css('display','none');
+                $('#paket_uang_muka').keypress(function(){
+                    $('#error_paket_uang_muka').css('display','none');
                 });
                 $('#motor_type').change(function(){
                     $('#error_motor_type').css('display','none');
@@ -258,8 +235,8 @@
                 $('#motor_merk').change(function(){
                     $('#error_motor_merk').css('display','none');
                 });
-                $('#motor_harga').keypress(function(){
-                    $('#error_motor_harga').css('display','none');
+                $('#paket_jumlah_cicilan').keypress(function(){
+                    $('#error_paket_jumlah_cicilan').css('display','none');
                 });
                 $('#motor_warna_pilihan').change(function(){
                     $('#error_motor_warna_pilihan').css('display','none');
@@ -269,33 +246,185 @@
                 });
             });
             
+            var no = 1;
+            $('[data-dismiss="modal"]').click(function(){
+                $('[data-repeater-list]').empty();
+                $('#tambah').empty();
+                no = 1;
+            });
+            $('#add').click(function(){
+        
+                $.ajax({
+                    data: $('#dataForm').serialize(),
+                    url: "{{ url('/admin/tambah_kredit') }}",
+                    method: "POST",
+                    dataType: "json",
+                    success: function(data){
+                        no += 1;
+                        $('#tambah').append(
+                            `
+                            <div class="tambahan">
+                                <div>
+                                    <div class="form-group">
+
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Tenor</label>
+                                            <select class="form-control" name="tenor[]" id="tenor`+no+`">
+                                                <option disabled selected>--Pilih Tenor--</option>
+                                                <option value="12">12</option>
+                                                <option value="24">24</option>
+                                                <option value="36">36</option>
+                                            </select>
+                                            <p style="color: red;" id="error_tenor`+no+`"></p>
+                                        </div>
+        
+                                        <div class="col-sm-6">
+                                            <label class="control-label">Paket Uang Muka</label>
+                                            <input disabled type="text" class="form-control number" id="paket_uang_muka_isi`+no+`" 
+                                            name="paket_uang_muka_isi" placeholder="Masukkan Nama Motor" 
+                                            maxlength="50" required="">
+                                            <input type="hidden" name="paket_uang_muka[]" id="paket_uang_muka`+no+`">
+                                            <p style="color: red;" id="error_paket_uang_muka`+no+`"></p>
+                                        </div>
+        
+                                    </div>
+        
+                                    <div class="form-group">
+                                        
+                                        <div class="col-sm-4">
+                                            <label for="name" class="control-label">Paket Bunga</label>
+                                            <input disabled type="text" class="form-control number" 
+                                            id="paket_bunga_isi`+no+`" name="paket_bunga_isi" placeholder="Masukkan Kode Motor" 
+                                             maxlength="4" required="">
+                                             <input type="hidden" name="paket_bunga[]" id="paket_bunga`+no+`">
+                                            <p style="color: red;" id="error_paket_bunga`+no+`"></p>
+                                        </div>
+        
+                                        <div class="col-sm-4">
+                                            <label class="control-label">Paket Nilai Cicilan</label>
+                                            <input disabled type="text" class="form-control number" id="paket_nilai_cicilan_isi`+no+`" 
+                                            name="paket_nilai_cicilan_isi" placeholder="Masukkan Nama Motor" 
+                                            maxlength="50" required="">
+                                            <input type="hidden" name="paket_nilai_cicilan[]" id="paket_nilai_cicilan`+no+`">
+                                            <p style="color: red;" id="error_paket_nilai_cicilan`+no+`"></p>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label for="name" class="control-label">Paket Jumlah Cicilan</label>
+                                            <input disabled type="text" class="form-control number" id="paket_jumlah_cicilan_isi`+no+`" 
+                                            name="paket_jumlah_cicilan_isi" placeholder="Masukkan Harga Motor" 
+                                            maxlength="50" required="">
+                                            <input type="hidden" name="paket_jumlah_cicilan[]" id="paket_jumlah_cicilan`+no+`">
+                                            <p style="color: red;" id="error_paket_jumlah_cicilan`+no+`"></p>
+                                        </div>
+        
+                                    </div>
+                                <div class="form-group">
+                                    <div class="col-md-2" style="margin-top:14px;" align="center">
+                                        <button id="remove-btn" class="btn btn-danger" onclick="$(this).parents('.tambahan').remove()">Hapus</button>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                        ).add(function(){
+                            $('#tenor'+no+'').on('change', function(){
+                                var tenor = $(this).val();
+                                var id = $('#id_motor').val(); 
+                                var nyatu = id+'|'+tenor;
+                                $.ajax({
+                                    url: "{{ url('/admin/kriditpaket-isi') }}"+'/'+nyatu,
+                                    method: "GET",
+                                    dataType: "json",
+                                    success: function (berhasil) {
+                                        console.log(berhasil); 
+                                        $('#paket_bunga'+no+'').val(berhasil.paket_bunga);
+                                        $('#paket_jumlah_cicilan'+no+'').val(berhasil.paket_jumlah_cicilan);
+                                        $('#paket_nilai_cicilan'+no+'').val(berhasil.paket_nilai_cicilan);
+                                        $('#paket_uang_muka'+no+'').val(berhasil.paket_uang_muka);
+
+                                        $('#paket_bunga_isi'+no+'').val(berhasil.paket_bunga);
+                                        $('#paket_jumlah_cicilan_isi'+no+'').val(berhasil.paket_jumlah_cicilan);
+                                        $('#paket_nilai_cicilan_isi'+no+'').val(berhasil.paket_nilai_cicilan);
+                                        $('#paket_uang_muka_isi'+no+'').val(berhasil.paket_uang_muka);
+                                    }
+                                });
+                            });
+                            $('.number').number(true, 0,'','.');
+                            $('#error_tambah').html('');
+                            $('#error_tambah').hide();
+                            $('#error_id_bahan'+no+'').html('');
+                            $('#error_qty'+no+'').html('');
+                            $('#error_harga'+no+'').html('');
+                            $('#error_expired'+no+'').html('');
+                            $('#error_id_bahan'+no+'').hide();
+                            $('#error_qty'+no+'').hide();
+                            $('#error_harga'+no+'').hide();
+                            $('#error_expired'+no+'').hide();
+                            $('#qty'+no+'').keypress(function(){
+                                $('#error_qty'+no+'').css('display','none');
+                            });
+                            $('#id_bahan'+no+'').on('change', function(){
+                                $('#error_harga'+no+'').css('display','none');
+                                $('#error_id_bahan'+no+'').css('display','none');
+                            });
+                            $('#harga'+no+'').keypress(function(){
+                                $('#error_harga'+no+'').css('display','none');
+                            });
+                            $('#expired'+no+'').change(function(){
+                                $('#error_expired'+no+'').css('display','none');
+                            });
+                            $("input").keypress(function(){
+                                $('#error_tambah').css('display','none');
+                            });
+                            $("input").change(function(){
+                                $('#error_tambah').css('display','none');
+                            });
+                            $("select").change(function(){
+                                $('#error_tambah').css('display','none');
+                            });
+        
+                        });
+                    },
+                    error: function(data){
+                        $('#error_tambah').html('');
+                        $('#error_tambah').show();
+                         $('#error_tambah').append('Silakan isi terlebih dahulu data di atas');
+                    }
+                });
+            });
 
             //KETIKA BUTTON EDIT DI KLIK
         $('body').on('click', '.editData', function () {
-            var motor_id = $(this).data('id');
-            $.get("{{ url('admin/motor') }}" +'/' + motor_id +'/edit', function (data) {
+            var kreditpaket_id = $(this).data('id');
+            $.get("{{ url('admin/kriditpaket') }}" +'/' + kreditpaket_id +'/edit', function (data) {
                 $('#saveBtn').show();
                 $('#modelHeading').html("Edit Motor");
                 $('#saveBtn').val("edit-user");
                 $('#saveBtn').html("Edit Data");
                 $('#ajaxModal').modal({backdrop: 'static', keyboard: false});
                 $('#ajaxModal').modal('show');     
-                $('#motor_warna_pilihan').val(data.warna);
-                $('#motor_warna_pilihan').trigger('change');
-                $('#motor_id').val(data.datamotor.id);                
-                $('#paket_kode').val(data.datamotor.paket_kode);
-                $('#paket_harga_cash').val(data.datamotor.paket_harga_cash);
-                $('#motor_harga').val(data.datamotor.motor_harga);
-                $('#motor_merk').val(data.datamotor.motor_merk);
-                $('#motor_merk').trigger('change');
-                $('#motor_type').val(data.datamotor.motor_type);
-                $('#motor_type').trigger('change');
-                $('.gambar').html('');
-                $('.gambar').append("<input type='hidden' name='nama_gambar' id='nama_gambar' value='"+data.datamotor.motor_gambar+"' /><br><img src={{ URL::to('/') }}/images/" + data.datamotor.motor_gambar + " id='tampil_gambar' style='margin-top: -15px;' width='70' class='img-thumbnail' />");
+                console.log(data);
+
+                $('#kreditpaket_id').val(data.id);
+                //$('#id_motor').val(data.id_motor);
+                $('#paket_kode').val(data.paket_kode);
+                $('#tenor').val(data.tenor);
+                $('#tenor').trigger('change');
+                $('#paket_bunga').val(data.paket_bunga);
+                $('#paket_jumlah_cicilan').val(data.paket_jumlah_cicilan);
+                $('#paket_nilai_cicilan').val(data.paket_nilai_cicilan);
+                $('#paket_uang_muka').val(data.paket_uang_muka);
+
+                $('#paket_bunga_isi').val(data.paket_bunga);
+                $('#paket_jumlah_cicilan_isi').val(data.paket_jumlah_cicilan);
+                $('#paket_nilai_cicilan_isi').val(data.paket_nilai_cicilan);
+                $('#paket_uang_muka_isi').val(data.paket_uang_muka);
+
+                $('#add').hide();
                 //ERRORRRRRRRRR
                 $('#error_paket_kode').html();
-                $('#error_paket_harga_cash').html();
-                $('#error_motor_harga').html();
+                $('#error_paket_uang_muka').html();
+                $('#error_paket_jumlah_cicilan').html();
                 $('#error_motor_merk').html();
                 $('#error_motor_type').html();
                 $('#error_motor_warna_pilihan').html();
@@ -304,8 +433,8 @@
                 $('#paket_kode').keypress(function(){
                     $('#error_paket_kode').css('display','none');
                 });
-                $('#paket_harga_cash').keypress(function(){
-                    $('#error_paket_harga_cash').css('display','none');
+                $('#paket_uang_muka').keypress(function(){
+                    $('#error_paket_uang_muka').css('display','none');
                 });
                 $('#motor_type').change(function(){
                     $('#error_motor_type').css('display','none');
@@ -313,8 +442,8 @@
                 $('#motor_merk').change(function(){
                     $('#error_motor_merk').css('display','none');
                 });
-                $('#motor_harga').keypress(function(){
-                    $('#error_motor_harga').css('display','none');
+                $('#paket_jumlah_cicilan').keypress(function(){
+                    $('#error_paket_jumlah_cicilan').css('display','none');
                 });
                 $('#motor_warna_pilihan').change(function(){
                     $('#error_motor_warna_pilihan').css('display','none');
@@ -331,7 +460,7 @@
                 var formData = new FormData($('#dataForm')[0]);
                 $.ajax({
                 data: formData,
-                url: "{{ url('admin/motor-store') }}",
+                url: "{{ url('admin/kriditpaket-store') }}",
                 type: "POST",
                 dataType: 'json',
                 cache:false,
@@ -345,6 +474,9 @@
                         $('#error_paket_kode').append('<p>'+data.errors+'</p>');
                     } else {
                     $('#dataForm').trigger("reset");
+                    $('[data-repeater-list]').empty();
+                    $('#tes').empty();
+                    $('#tambah').empty();
                     $('#ajaxModal').modal('hide');
                     table.draw();
                     Swal.fire({
@@ -364,8 +496,8 @@
                 error: function (request, status, error) {
                     $('#saveBtn').show();
                     $('#error_paket_kode').empty().show();
-                    $('#error_paket_harga_cash').empty().show();
-                    $('#error_motor_harga').empty().show();
+                    $('#error_paket_uang_muka').empty().show();
+                    $('#error_paket_jumlah_cicilan').empty().show();
                     $('#error_motor_merk').empty().show();
                     $('#error_motor_type').empty().show();
                     $('#error_motor_warna_pilihan').empty().show();
@@ -373,8 +505,8 @@
                     json = $.parseJSON(request.responseText);
                     console.log(json.errors);
                     $('#error_paket_kode').html(json.errors.paket_kode);
-                    $('#error_paket_harga_cash').html(json.errors.paket_harga_cash);
-                    $('#error_motor_harga').html(json.errors.motor_harga);
+                    $('#error_paket_uang_muka').html(json.errors.paket_uang_muka);
+                    $('#error_paket_jumlah_cicilan').html(json.errors.paket_jumlah_cicilan);
                     $('#error_motor_merk').html(json.errors.motor_merk);
                     $('#error_motor_type').html(json.errors.motor_type);
                     $('#error_motor_gambar').html(json.errors.motor_gambar);
@@ -387,7 +519,7 @@
 
             //KETIKA BUTTON DELETE DI KLIK
         $('body').on('click', '.deleteData', function () {
-            var motor_id = $(this).data("id");
+            var kriditpaket = $(this).data("id");
             Swal.fire({
                 title: 'Apa kamu yakin?',
                 text: "Kamu akan menghapus ini!",
@@ -401,7 +533,7 @@
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ url('admin/motor-destroy') }}"+'/'+motor_id,
+                        url: "{{ url('admin/kriditpaket-destroy') }}"+'/'+kriditpaket,
                         success: function (data) {
                             table.draw();
                         },

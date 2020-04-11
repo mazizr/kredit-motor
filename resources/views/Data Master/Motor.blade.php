@@ -70,6 +70,7 @@
                     <!-- Form-->
                     <form id="dataForm" name="dataForm" enctype="multipart/form-data" class="form-horizontal">
                     <input type="hidden" name="motor_id" id="motor_id">
+                    <input type="hidden" name="id_merk" id="id_merk">
                             <div class="form-group">
                                 <div class="col-sm-4">
                                     <label for="name" class="control-label">Kode Motor</label>
@@ -96,16 +97,8 @@
                             <div class="form-group">
                                 <div class="col-sm-6">
                                     <label for="name" class="control-label" style="margin-top: 1px; margin-bottom: 11px;">Brand Motor</label>
-                                    <select type="text" class="form-control select2" id="motor_merk" style="width: 100%;" name="motor_merk" placeholder="" value="" maxlength="50" required="">
-                                        <option value="Honda">
-                                            Honda
-                                        </option>
-                                        <option value="Yamaha">
-                                            Yamaha
-                                        </option>
-                                        <option value="Suzuki">
-                                            Suzuki
-                                        </option>   
+                                    <select type="text" class="form-control select2 isi_merk" id="motor_merk" style="width: 100%;" name="motor_merk" placeholder="" value="" maxlength="50" required="">
+                                        <option></option> 
                                     </select>
                                     <p style="color: red;" id="error_motor_merk"></p>
                                 </div>
@@ -280,7 +273,7 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'motor_kode', name: 'motor_kode'},
-                    {data: 'motor_merk', name: 'motor_merk'},
+                    {data: 'nama_merk', name: 'motor_merk'},
                     {data: 'motor_type', name: 'motor_type'},
                     {data: 'motor_warna_pilihan', name: 'motor_warna_pilihan'},
                     {data: 'motor_harga', name: 'motor_harga'},
@@ -298,6 +291,26 @@
 
             $('.number').number(true, 0,'','.');
 
+            //ISI SELECT BAHAN
+            $.ajax({
+                url: "{{ url('admin/merk') }}",
+                method: "GET",
+                dataType: "json",
+
+                success: function (berhasil) {
+                    // console.log(berhasil)
+                    $.each(berhasil.data, function (key, value) {
+                        $(".isi_merk").append(
+                            `
+                            <option value="${value.id}">
+                                ${value.nama_merk} <img src={{ URL::to('/') }}/images/`+value.gambar_merk+` width='50' class='img-thumbnail' />
+                            </option>
+                            `
+                        )
+                    })
+                }
+            })
+
             //KETIKA BUTTON TAMBAH DI KLIK
             $('#buatbaru').click(function () {
                 $('#saveBtn').show();
@@ -307,6 +320,7 @@
                 $('#modelHeading').html("Tambah Data");
                 $('#ajaxModal').modal({backdrop: 'static', keyboard: false});
                 $('#ajaxModal').modal('show');
+                $('#motor_id').val('');
                 $('#motor_kode').prop('disabled', true);
                 $('#motor_warna_pilihan').prop('disabled', true);
                 var currColor = '#3c8dbc' //Red by default
@@ -314,6 +328,7 @@
                 currColor = $(this).css('color')
                 $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor });
                 $('#blah').attr('src', '#');
+                $('#motor_merk').show();
                 $('#motor_merk').val('').trigger('change');
                 $('#motor_warna_pilihan').val('').trigger('change');
                 $('.gambar').html('');
@@ -346,16 +361,20 @@
 
                 $('#motor_merk').on('change', function(){
                     var motor_merk = $(this).val();
-                    $.ajax({
-                        url: "{{ url('/admin/motor-isi') }}"+'/'+motor_merk,
-                        method: "GET",
-                        dataType: "json",
-                        success: function (berhasil) {
-                            $('#motor_kode').prop('disabled', false);
-                            console.log(berhasil);
-                            $('#motor_kode').val(berhasil);
-                        }
-                    });
+                    //console.log(satu);
+                        $.ajax({
+                            url: "{{ url('/admin/motor-isi') }}"+'/'+motor_merk,
+                            method: "GET",
+                            dataType: "json",
+                            success: function (berhasil) {
+                                $('#motor_kode').prop('disabled', false);
+                                //console.log(berhasil);
+                                $('#id_merk').val(motor_merk);
+                                $('#motor_kode').val(berhasil);
+                            }
+                        });
+                    
+                    
                 });
             });
             
@@ -371,13 +390,38 @@
                 $('#saveBtn').html("Edit Data");
                 $('#ajaxModal').modal({backdrop: 'static', keyboard: false});
                 $('#ajaxModal').modal('show');   
-                $('#motor_kode').prop('disabled', false); 
+                $('#motor_merk').hide();
+                $('#motor_kode').prop('disabled', true); 
                 $('#motor_warna_pilihan').prop('disabled', true); 
                 $('#backnya').css('background-color', data.datamotor.motor_warna_pilihan);
-                console.log(data.datamotor.motor_warna_pilihan);
+                //console.log(data.datamotor.motor_warna_pilihan);
                 $('#motor_warna_pilihan').val(data.datamotor.motor_warna_pilihan);
-                $('#motor_id').val(data.datamotor.id);                
-                $('#motor_kode').val(data.datamotor.motor_kode);
+                $('#motor_id').val(data.datamotor.id);   
+                
+                $('#motor_merk').on('change', function(){
+                    var motor_merk = $(this).val();
+                    //console.log(satu);
+                        $.ajax({
+                            url: "{{ url('/admin/motor-isi') }}"+'/'+motor_merk,
+                            method: "GET",
+                            dataType: "json",
+                            success: function (berhasil) {
+                                $('#motor_kode').prop('disabled', false);
+                                console.log(berhasil);
+                                $('#motor_kode').val(berhasil);
+                            }
+                        });
+                    
+                    
+                });
+
+                const str = data.datamotor.motor_kode;        
+                console.log(str);
+                var result = str.split('-');
+                var angka = result[1].replace ( /[^\d.]/g, '' );
+                var satuin = result[0]+'-'+angka;
+                console.log(satuin);    
+                $('#motor_kode').val(satuin);
                 $('#motor_harga').val(data.datamotor.motor_harga);
                 $('#motor_merk').val(data.datamotor.motor_merk);
                 $('#motor_merk').trigger('change');

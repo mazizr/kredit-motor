@@ -18,8 +18,8 @@ class MotorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = \DB::select('SELECT *
-            FROM motors'); 
+            $data = \DB::select('SELECT m.id, m.motor_kode, m.motor_type, m.motor_warna_pilihan, m.motor_harga, m.motor_gambar, mk.nama_merk FROM motors AS m 
+            LEFT JOIN merks AS mk ON mk.id = m.motor_merk'); 
             // dd($warna);
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -38,23 +38,7 @@ class MotorController extends Controller
         }
         return view('Data Master.motor');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         // dd($request->all());
@@ -106,13 +90,14 @@ class MotorController extends Controller
         }
 
         if(isset($request->motor_id)){ 
-            $cek = \DB::select('SELECT id,motor_kode FROM motors WHERE motor_kode = "'.$request->motor_kode.'" and id = "'.$request->motor_id.'"');
+            // dd($request->motor_id);
+            $cek = \DB::select('SELECT id,motor_kode FROM motors WHERE motor_kode = "'.$request->motor_kode.'" and id = '.$request->motor_id.'');
             $cek2 = \DB::select('SELECT motor_kode FROM motors WHERE motor_kode = "'.$request->motor_kode.'"');
             // dd($cek);
             if (!$cek && $cek2) {
                 return response()->json(['errors'=>'Telah Ada Data Yang Sama', 500]);
             }
-            $warna = $request->warnanya;
+            
         }
 
         // $isi = array_keys($request->motor_warna_pilihan);
@@ -127,76 +112,64 @@ class MotorController extends Controller
             $new_name = $request->nama_gambar;
         }
 
-        
-        // $harga = implode('.', $request->motor_harga);
-        // dd($request->motor_harga);
-        // for ($i = 0; $i < $ok; $i++) {
-        //     $pilihan = $request->motor_warna_pilihan[$i];
-        //     $semua[] = $pilihan;
-        // }
-        // $warnanya = implode(',', $semua);
-        // dd($request->all());
+        if(!isset($request->motor_id)){ 
+            $warna = $request->motor_warna_pilihan;
+        } if (isset($request->motor_id)) {
+            $warna = $request->warnanya;
+        }
+        // dd($warna);
         $satu = explode('.', $request->motor_harga);
         $harga = implode($satu);
         Motor::updateOrCreate(['id' => $request->motor_id],
                 ['motor_kode' => $request->motor_kode,
                  'motor_merk' => $request->motor_merk,
                  'motor_type' => $request->motor_type,
-                 'motor_warna_pilihan' => $request->motor_warna_pilihan, 
+                 'motor_warna_pilihan' => $warna, 
                  'motor_harga' => $harga,
-                 'motor_gambar' => $new_name
+                 'motor_gambar' => $new_name,
+                 'id_merk' => $request->id_merk,
+                 'slug' => str_slug($request->motor_type, '-')
                  ]);  
         
         // dd($isinya);
         return response()->json(['success'=>'Motor saved successfully.']);
     }
 
-    public function isi($id)
+    public function isi(Request $request, $id)
     {
-        $cek = \DB::select('SELECT motor_kode FROM motors WHERE motor_merk = "'.$id.'" ORDER BY motor_kode DESC LIMIT 1');
         
-        if($cek==[]){
-            $angka = 0001;
-            if($id == 'Honda'){
-                $kode = 'HND-'.$angka;
-            }
-            if($id == 'Yamaha'){
-                $kode = 'YMH-'.$angka;
-            } elseif ($id == 'Suzuki') {
-                $kode= 'SZK-'.$angka;
-            }
-        } else {
-            // dd($cek);
-            foreach($cek as $data){ 
-                // dd($data->motor_kode); 
-                $isi = $data->motor_kode; 
-            }
-            // dd($isi->motor_kode);
-            $pisah = explode('-', $isi);
-            // dd($pisah);
-            $pilih_angka = intval($pisah[1]);
-            // dd($pilih_angka+1);
-            $hasil = $pilih_angka+1;
-            // dd($hasil);
-            if($id == 'Honda'){
-                $kode = 'HND-'.$hasil;
-            }
-            if($id == 'Yamaha'){
-                $kode = 'YMH-'.$hasil;
-            } elseif ($id == 'Suzuki') {
-                $kode= 'SZK-'.$hasil;
-            }
+        $liat = \DB::select('SELECT kode_merk FROM merks WHERE id = '.$id.'');
+        foreach ($liat as $key) {
+            $cek = $key->kode_merk;
         }
+        // dd($cek);
+        $adaga = \DB::select('SELECT m.motor_kode 
+        FROM motors AS m 
+        WHERE m.motor_merk = '.$id.' 
+        ORDER BY motor_kode DESC LIMIT 1');
+        // dd($adaga);
+            if(!$adaga){
+                $angka = 1;
+                $kode = $cek.'-'.$angka;
+            } else {
+                // dd($adaga);
+                foreach($adaga as $data){ 
+                    // dd($data->motor_kode); 
+                    $isi = $data->motor_kode; 
+                }
+                // dd($isi);
+                $pisah = explode('-', $isi);
+                // dd($pisah);
+                $pilih_angka = intval($pisah[1]);
+                // dd($pilih_angka+1);
+                $hasil = $pilih_angka+1;
+                
+                $kode = $cek.'-'.$hasil;
+            }
         // dd($kode);
         return response()->json($kode);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $data = \DB::select('SELECT * FROM motors WHERE id = '.$id.'');
@@ -210,24 +183,6 @@ class MotorController extends Controller
         return response()->json($doto);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         Motor::find($id)->delete();

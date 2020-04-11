@@ -22,7 +22,7 @@
               <div class="col-sm col-md-6 col-lg-3 ftco-animate">
                     <div class="item">
                         <div class="product">
-                            <a href={{ URL::to('/') }}/single/{{ encrypt($item->id) }} class="img-prod"><img class="img-fluid" src={{ URL::to('/') }}/images/{{ $item->motor_gambar }} alt="Colorlib Template"></a>
+                            <a href={{ URL::to('/') }}/single/{{ $item->slug }} class="img-prod"><img class="img-fluid" src={{ URL::to('/') }}/images/{{ $item->motor_gambar }} alt="Colorlib Template"></a>
                             <div class="text pt-3 px-3">
                                 <h3><a href="#">{{ $item->motor_type }}</a></h3>
                                 <div class="d-flex">

@@ -49,6 +49,11 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
+            <li>
+              <a href="{{ url('admin/')}}"><i class="fa fa-home"></i> <span>Home</span>
+                <span class="pull-right-container">
+                </span></a>
+            </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-book"></i> <span>Data Master</span>
@@ -59,6 +64,7 @@
                 <ul class="treeview-menu">
                   <li><a href="{{ url('admin/pembeli')}}"><i class="fa fa-circle-o"></i> Pembeli</a></li>
                   <li><a href="{{ url('admin/motor')}}"><i class="fa fa-circle-o"></i> Motor</a></li>
+                  <li><a href="{{ url('admin/merk')}}"><i class="fa fa-circle-o"></i> Brand</a></li>
                 </ul>
             </li>
           </ul>

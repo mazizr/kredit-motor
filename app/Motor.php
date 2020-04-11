@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Motor extends Model
 {
-    protected $fillable = ['motor_kode','motor_nama','motor_merk','motor_type','motor_warna_pilihan','motor_harga','motor_gambar','id_warna'];
+    protected $fillable = ['motor_kode','motor_nama','motor_merk','motor_type','motor_warna_pilihan','motor_harga','motor_gambar','id_merk','slug'];
     public $timestamps = true;
 
     public function belicash()
@@ -19,8 +19,12 @@ class Motor extends Model
         return $this->hasMany('App\BeliKridit', 'id_motor');
     }
 
-    public function warna()
+    public function merk()
     {
-        return $this->belongsTo('App\WarnaMotor', 'id_warna');
+        return $this->belongsTo('App\Merk', 'id_merk');
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
